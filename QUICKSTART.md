@@ -1,26 +1,26 @@
 # 🚀 Quick Start Guide - CSC Rahti Demo
 
-Tämä on nopea aloitusopas CSC Rahti Demo -sovelluksen käyttöönottoon.
+This is a quick start guide for deploying the CSC Rahti Demo application.
 
-## ⚡ Nopea käyttöönotto (5 minuuttia)
+## ⚡ Quick Deployment (5 minutes)
 
-### 1. Esivalmistelut
+### 1. Prerequisites
 ```bash
-# Lataa OpenShift CLI jos ei ole asennettu
+# Download OpenShift CLI if not installed
 # Windows: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-windows.zip
 # Linux: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz
 # macOS: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-mac.tar.gz
 
-# Kirjaudu CSC Rahtiin
+# Login to CSC Rahti
 oc login https://rahti.csc.fi/
 ```
 
-### 2. Luo projekti
+### 2. Create project
 ```bash
 oc new-project my-demo-app
 ```
 
-### 3. Deploy sovellus (Vaihtoehto A - Automaattinen)
+### 3. Deploy application (Option A - Automatic)
 ```bash
 # Linux/macOS
 chmod +x deploy.sh
@@ -30,69 +30,69 @@ chmod +x deploy.sh
 deploy.bat deploy
 ```
 
-### 3. Deploy sovellus (Vaihtoehto B - Manuaalinen)
+### 3. Deploy application (Option B - Manual)
 ```bash
-# 1. Luo image stream ja build config
+# 1. Create image stream and build config
 oc new-build --name=csc-rahti-demo --binary --strategy=docker
 
-# 2. Rakenna image
+# 2. Build image
 oc start-build csc-rahti-demo --from-dir=. --follow
 
-# 3. Päivitä deployment.yaml -tiedostossa image-polku:
+# 3. Update image path in deployment.yaml:
 # image: image-registry.openshift-image-registry.svc:5000/NAMESPACE/csc-rahti-demo:latest
 
-# 4. Deploy resurssit
+# 4. Deploy resources
 oc apply -f k8s/
 ```
 
-### 4. Tarkista tulos
+### 4. Check results
 ```bash
-# Katso podien status
+# Check pod status
 oc get pods
 
-# Hae sovelluksen URL
+# Get application URL
 oc get routes
 
-# Testaa sovellus
+# Test application
 curl https://YOUR-ROUTE-URL/health
 ```
 
-## 🎯 Mitä sovellus sisältää?
+## 🎯 What does the application include?
 
-✅ **Flask Web App** - Python-pohjainen web-sovellus  
-✅ **Health Checks** - `/health` ja `/ready` endpointit  
+✅ **Flask Web App** - Python-based web application  
+✅ **Health Checks** - `/health` and `/ready` endpoints  
 ✅ **API Demo** - `/api/data` REST endpoint  
-✅ **Responsive UI** - Moderni web-käyttöliittymä  
-✅ **Auto-scaling** - HPA konfiguroitu  
+✅ **Responsive UI** - Modern web interface  
+✅ **Auto-scaling** - HPA configured  
 ✅ **Security** - Non-root user, security contexts  
 ✅ **Storage** - Persistent volume claim  
-✅ **Monitoring** - Logging ja metrics  
+✅ **Monitoring** - Logging and metrics  
 
-## 🔧 Paikallinen kehitys
+## 🔧 Local development
 
 ```bash
-# 1. Asenna riippuvuudet
+# 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Käynnistä kehityspalvelin
+# 2. Start development server
 python dev.py
-# TAI
+# OR
 python app.py
 
-# 3. Avaa selaimessa
+# 3. Open in browser
 http://localhost:8080
 ```
 
-## 📊 Hyödyllisiä komentoja
+## 📊 Useful commands
 
 ```bash
 # Status
 oc get all -l app=csc-rahti-demo
 
-# Lokit
+# Logs
 oc logs -l app=csc-rahti-demo --tail=50 -f
 
-# Port forward (testaus)
+# Port forward (testing)
 oc port-forward svc/csc-rahti-demo-service 8080:8080
 
 # Scale manually
@@ -107,41 +107,41 @@ oc delete all,configmap,secret,pvc -l app=csc-rahti-demo
 
 ## 🐛 Troubleshooting
 
-### Yleisimmät ongelmat:
+### Most common issues:
 
-**1. Pod ei käynnisty**
+**1. Pod won't start**
 ```bash
 oc describe pod <pod-name>
 oc logs <pod-name>
 ```
 
-**2. Route ei toimi**
+**2. Route not working**
 ```bash
 oc get routes
 oc describe route csc-rahti-demo-route
 ```
 
-**3. Image build epäonnistuu**
+**3. Image build fails**
 ```bash
 oc logs bc/csc-rahti-demo
 ```
 
 **4. Permission denied**
-- Varmista että käytät non-root useria
-- Tarkista security context asetukset
+- Make sure you're using non-root user
+- Check security context settings
 
-## 📞 Tuki
+## 📞 Support
 
 - **CSC Rahti docs**: https://docs.csc.fi/cloud/rahti/
 - **CSC Support**: https://research.csc.fi/support
 - **OpenShift docs**: https://docs.openshift.com/
 
-## 🎉 Valmis!
+## 🎉 Ready!
 
-Sovelluksesi pitäisi nyt olla käynnissä Rahtissa. Onnittelut! 🎉
+Your application should now be running in Rahti. Congratulations! 🎉
 
-Seuraavat askeleet:
-1. Muokkaa sovellusta omiin tarpeisiisi
-2. Lisää tietokanta (PostgreSQL/MySQL)
-3. Konfiguroi CI/CD pipeline
-4. Lisää domain ja SSL-sertifikaatti
+Next steps:
+1. Modify the application for your needs
+2. Add a database (PostgreSQL/MySQL)
+3. Configure CI/CD pipeline
+4. Add custom domain and SSL certificate
