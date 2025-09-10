@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+  labels:
+    app: csc-rahti-demo
+type: Opaque
+stringData:
+  secret-key: "csc-rahti-demo-secret-key-change-this-in-production"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  labels:
+    app: csc-rahti-demo
+data:
+  FLASK_ENV: "production"
+  LOG_LEVEL: "INFO"
+  APP_NAME: "CSC Rahti Demo Application"

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSC Rahti Demo Application</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .system-info {
+            margin: 10px 0;
+        }
+        
+        .system-info strong {
+            color: #34495e;
+        }
+        
+        .api-demo {
+            margin-top: 20px;
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .api-result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer p {
+            color: #7f8c8d;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 CSC Rahti Demo Application</h1>
+            <p>Welcome! This is a demo application for CSC's Rahti container platform.</p>
+        </div>
+        
+        <div class="content">
+            <div class="card">
+                <h2>📊 System Information</h2>
+                <div class="system-info">
+                    <p><strong>Server:</strong> {{ system_info.hostname }}</p>
+                    <p><strong>Platform:</strong> {{ system_info.platform }}</p>
+                    <p><strong>Python Version:</strong> {{ system_info.python_version }}</p>
+                    <p><strong>Timestamp:</strong> {{ system_info.timestamp }}</p>
+                    <p><strong>Port:</strong> {{ system_info.environment.port }}</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>🔧 Rahti Features</h2>
+                <ul class="feature-list">
+                    <li>OpenShift/OKD-based platform</li>
+                    <li>Automatic scaling</li>
+                    <li>Rolling updates</li>
+                    <li>Health checks</li>
+                    <li>Persistent storage</li>
+                    <li>Load balancing</li>
+                    <li>HTTPS support</li>
+                    <li>CI/CD integration</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>🌐 API Demo</h2>
+                <p>Test the application's API endpoint:</p>
+                <div class="api-demo">
+                    <button class="button" onclick="testAPI()">Fetch API Data</button>
+                    <div id="api-result" class="api-result"></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>📚 Useful Links</h2>
+                <ul class="feature-list">
+                    <li><a href="/health" target="_blank">Health Check</a></li>
+                    <li><a href="/ready" target="_blank">Readiness Check</a></li>
+                    <li><a href="/info" target="_blank">System Information (JSON)</a></li>
+                    <li><a href="/api/data" target="_blank">API Data Fetch</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>
+                Application running on CSC's <a href="https://docs.csc.fi/cloud/rahti/" target="_blank">Rahti</a> platform.
+                <br>
+                More information: <a href="https://docs.csc.fi/" target="_blank">docs.csc.fi</a>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        async function testAPI() {
+            const button = document.querySelector('.button');
+            const resultDiv = document.getElementById('api-result');
+            
+            button.textContent = 'Loading...';
+            button.disabled = true;
+            
+            try {
+                const response = await fetch('/api/data');
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <h3>API Response:</h3>
+                    <p><strong>Message:</strong> ${data.message}</p>
+                    <p><strong>Server:</strong> ${data.server}</p>
+                    <p><strong>Timestamp:</strong> ${data.timestamp}</p>
+                    <h4>Data:</h4>
+                    <ul>
+                        ${data.data.map(item => `
+                            <li>${item.name}: ${item.value}</li>
+                        `).join('')}
+                    </ul>
+                `;
+                resultDiv.style.display = 'block';
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+                resultDiv.style.display = 'block';
+            }
+            
+            button.textContent = 'Fetch API Data';
+            button.disabled = false;
+        }
+        
+        // Auto-refresh system info every 30 seconds
+        setInterval(() => {
+            location.reload();
+        }, 30000);
+    </script>
+</body>
+</html>
