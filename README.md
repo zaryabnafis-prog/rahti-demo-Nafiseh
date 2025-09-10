@@ -299,6 +299,231 @@ csc-rahti-demo/
     └── storage-and-network.yaml  # Storage and Network policies
 ```
 
+## 🚀 Getting Started
+
+### Option 1: Fork the Repository (Recommended for Students)
+
+**This creates your own copy on GitHub that you can modify and push changes to:**
+
+1. **Fork on GitHub:**
+   - Go to: https://github.com/Vikke82/csc-rahti-demo
+   - Click the **"Fork"** button in the top-right corner
+   - This creates a copy under your GitHub account: `https://github.com/YOUR-USERNAME/csc-rahti-demo`
+
+2. **Clone your fork:**
+   ```bash
+   # Replace YOUR-USERNAME with your actual GitHub username
+   git clone https://github.com/YOUR-USERNAME/csc-rahti-demo.git
+   cd csc-rahti-demo
+   ```
+
+3. **Set up remotes (optional - for keeping up with updates):**
+   ```bash
+   # Add the original repository as "upstream"
+   git remote add upstream https://github.com/Vikke82/csc-rahti-demo.git
+   
+   # Verify remotes
+   git remote -v
+   # Should show:
+   # origin    https://github.com/YOUR-USERNAME/csc-rahti-demo.git (fetch)
+   # origin    https://github.com/YOUR-USERNAME/csc-rahti-demo.git (push)
+   # upstream  https://github.com/Vikke82/csc-rahti-demo.git (fetch)
+   # upstream  https://github.com/Vikke82/csc-rahti-demo.git (push)
+   ```
+
+### Option 2: Direct Clone (Read-Only)
+
+**For quick testing - you can't push changes back:**
+
+```bash
+git clone https://github.com/Vikke82/csc-rahti-demo.git
+cd csc-rahti-demo
+```
+
+### Option 3: Download ZIP
+
+**No Git required - download and extract:**
+
+1. Go to: https://github.com/Vikke82/csc-rahti-demo
+2. Click **"Code"** → **"Download ZIP"**
+3. Extract the ZIP file to your desired location
+
+## 🔄 Working with Your Own Copy
+
+### Making Changes and Pushing
+
+**After forking (Option 1), you can make changes and save them:**
+
+```bash
+# Make your changes to any files
+# For example, edit app.py, templates, or add new features
+
+# Stage your changes
+git add .
+
+# Commit with a descriptive message
+git commit -m "Add my custom feature"
+
+# Push to your GitHub repository
+git push origin main
+```
+
+### Keeping Your Fork Updated
+
+**To get latest changes from the original repository:**
+
+```bash
+# Fetch latest changes from upstream
+git fetch upstream
+
+# Merge changes into your main branch
+git checkout main
+git merge upstream/main
+
+# Push updated main to your fork
+git push origin main
+```
+
+### Creating Your Own GitHub Repository
+
+**If you want to start completely fresh:**
+
+1. **Create new repository on GitHub:**
+   - Go to: https://github.com/new
+   - Repository name: `my-rahti-app` (or any name you prefer)
+   - Description: `My CSC Rahti application based on demo`
+   - Choose Public or Private
+   - **Don't** initialize with README (we'll use the existing one)
+
+2. **Clone the demo and change remote:**
+   ```bash
+   # Clone the demo
+   git clone https://github.com/Vikke82/csc-rahti-demo.git my-rahti-app
+   cd my-rahti-app
+   
+   # Remove original remote
+   git remote remove origin
+   
+   # Add your new repository as origin
+   git remote add origin https://github.com/YOUR-USERNAME/my-rahti-app.git
+   
+   # Push to your new repository
+   git push -u origin main
+   ```
+
+3. **Customize for your project:**
+   ```bash
+   # Update README.md with your project details
+   # Modify app.py for your specific needs
+   # Change application name in k8s/ manifests
+   # Update deploy scripts if needed
+   
+   # Commit your customizations
+   git add .
+   git commit -m "Customize application for my project"
+   git push origin main
+   ```
+
+## 📚 Student Workflow Example
+
+**Here's a typical workflow for students:**
+
+### 1. Initial Setup
+```bash
+# Fork on GitHub, then clone your fork
+git clone https://github.com/YOUR-USERNAME/csc-rahti-demo.git
+cd csc-rahti-demo
+
+# Test locally first
+pip install -r requirements.txt
+python app.py
+# Visit http://localhost:8080
+```
+
+### 2. Deploy to CSC Rahti
+```bash
+# Login to CSC Rahti
+oc login https://api.2.rahti.csc.fi:6443
+
+# Create your project (use your CSC project number)
+oc new-project my-student-project --description="csc_project: YOUR_NUMBER"
+
+# Deploy the application
+chmod +x deploy.sh  # Linux/macOS
+./deploy.sh deploy
+
+# Windows users:
+# deploy.bat deploy
+```
+
+### 3. Make Customizations
+```bash
+# Edit application files
+# For example, change the welcome message in app.py:
+# 'message': 'Welcome to [Your Name]\'s Rahti Demo!'
+
+# Update templates/index.html with your content
+# Modify CSS styling, add new features, etc.
+
+# Test locally
+python app.py
+
+# Commit changes
+git add .
+git commit -m "Customize welcome message and styling"
+git push origin main
+```
+
+### 4. Update Deployment
+```bash
+# Rebuild and deploy updated application
+oc start-build csc-rahti-demo --from-dir=. --follow
+
+# Or use the deploy script
+./deploy.sh deploy
+```
+
+### 5. Share Your Work
+```bash
+# Your GitHub repository: https://github.com/YOUR-USERNAME/csc-rahti-demo
+# Your deployed app: Get URL with: oc get route csc-rahti-demo-route -o jsonpath='{.spec.host}'
+# Share both links in your assignment submission
+```
+
+## 🎯 Assignment Ideas for Students
+
+**Students can extend this demo by:**
+
+1. **Add a Database:**
+   - Deploy PostgreSQL or MySQL
+   - Create data models
+   - Add CRUD operations
+
+2. **Implement Authentication:**
+   - User registration/login
+   - Session management
+   - Protected routes
+
+3. **Add Frontend Framework:**
+   - React/Vue.js frontend
+   - API-only backend
+   - Modern SPA architecture
+
+4. **Monitoring & Logging:**
+   - Add Prometheus metrics
+   - Implement structured logging
+   - Create custom dashboards
+
+5. **CI/CD Pipeline:**
+   - GitHub Actions
+   - Automated testing
+   - Automatic deployment
+
+6. **Custom Features:**
+   - File upload/download
+   - Real-time chat (WebSocket)
+   - External API integration
+
 ## 🚀 Deployment to Rahti
 
 ### Step-by-Step Instructions
@@ -458,6 +683,57 @@ oc apply -f k8s/
 ```
 
 ## 🔧 Development
+
+### Repository Management Best Practices
+
+#### Branch Strategy for Students
+```bash
+# Create feature branches for major changes
+git checkout -b feature/add-database
+# Make your changes
+git add .
+git commit -m "Add PostgreSQL database integration"
+git push origin feature/add-database
+
+# Create pull request on GitHub, then merge to main
+# After merging, clean up:
+git checkout main
+git pull origin main
+git branch -d feature/add-database
+```
+
+#### Collaboration with Team Members
+```bash
+# Add team member's fork as remote
+git remote add teammate https://github.com/TEAMMATE-USERNAME/csc-rahti-demo.git
+
+# Fetch their changes
+git fetch teammate
+
+# Create branch to review their work
+git checkout -b review-teammate-feature teammate/main
+
+# Merge specific changes
+git checkout main
+git merge teammate/feature-branch
+```
+
+#### Keeping Dependencies Updated
+```bash
+# Check for updates
+pip list --outdated
+
+# Update requirements.txt
+pip freeze > requirements.txt
+
+# Test with new versions
+python app.py
+
+# Commit dependency updates
+git add requirements.txt
+git commit -m "Update Python dependencies"
+git push origin main
+```
 
 ### Local Development Setup
 
@@ -627,6 +903,49 @@ The application supports persistent storage:
 - Allows all outgoing traffic
 
 ## 🛠️ Troubleshooting
+
+### Git and GitHub Issues
+
+**1. "Permission denied" when pushing**
+```bash
+# Make sure you're pushing to your fork, not the original
+git remote -v
+# Should show your username, not Vikke82
+
+# If wrong, update remote:
+git remote set-url origin https://github.com/YOUR-USERNAME/csc-rahti-demo.git
+```
+
+**2. "Repository not found"**
+```bash
+# Check if you forked the repository
+# Go to: https://github.com/YOUR-USERNAME/csc-rahti-demo
+# If it doesn't exist, fork it first
+
+# Make sure remote URL is correct
+git remote get-url origin
+```
+
+**3. Merge conflicts when updating from upstream**
+```bash
+# Fix conflicts manually, then:
+git add .
+git commit -m "Resolve merge conflicts"
+git push origin main
+```
+
+**4. Want to start over completely**
+```bash
+# Delete local repository and re-clone
+cd ..
+rm -rf csc-rahti-demo  # Linux/macOS
+# rmdir /s csc-rahti-demo  # Windows
+
+# Re-clone your fork
+git clone https://github.com/YOUR-USERNAME/csc-rahti-demo.git
+```
+
+### OpenShift/Rahti Issues
 
 ### Common issues
 
