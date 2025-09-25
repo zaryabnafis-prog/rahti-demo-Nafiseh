@@ -72,12 +72,18 @@ def readiness_check():
 def info():
     """System information endpoint"""
     return jsonify(get_system_info())
+@app.route('/api/myname')
+def my_name():
+    """Return my name via API"""
+    return jsonify({
+        "name": "Nafiseh Babapourzaryab"
+    })
 
 @app.route('/api/data')
 def api_data():
     """Sample API endpoint"""
     data = {
-        'message': 'Welcome to CSC Rahti Demo Application!',
+        'message': 'Nafiseh Babapourzaryab, welcome!!',
         'data': [
             {'id': 1, 'name': 'First Item', 'value': 42},
             {'id': 2, 'name': 'Second Item', 'value': 84},
